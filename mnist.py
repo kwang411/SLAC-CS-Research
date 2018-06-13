@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import division
 import keras
 from keras.datasets import mnist
 from keras.models import Sequential
@@ -6,13 +7,25 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.models import load_model
+from keras.callbacks import Callback
 
+class WeightsSaver(Callback):
+    def __init__(self, model, N):
+        self.model = model
+        self.N = N
+        self.batch = 0
 
-# model = load_model('6-13-18-simpleMNIST.h5')
+    def on_batch_end(self, batch, logs={}):
+        if self.batch % self.N == 0:
+            name = 'weights%08d.h5' % self.batch
+            self.model.save_weights('weights/' + name)
+        self.batch += 1
 
-batch_size = 128
+#model = load_model('6-13-18-simpleMNIST.h5')
+
+batch_size = 256
 num_classes = 10
-epochs = 12
+epochs = 1
 
 # input image dimensions
 img_rows, img_cols = 28, 28
@@ -61,9 +74,10 @@ model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_data=(x_test, y_test))
+          validation_data=(x_test, y_test),
+          callbacks=[WeightsSaver(model, 5)])
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-model.save('6-13-18-simpleMNISTv1.h5')
+#model.save('6-13-18-simpleMNISTv1.h5')
