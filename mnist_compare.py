@@ -121,7 +121,5 @@ for i in range(trials):
 print(loss.losses)
 
 
-comparison = [squaredDifference(loss.losses[i], loss.losses[j]) for i in range(trials) for j in range(trials)]  
-print('\n'.join([''.join(['{:4}'.format(item) for item in row]) 
-      for row in comparison]))
+comparison = [[squaredDifference(loss.losses[i], loss.losses[j]) for i in range(trials)] for j in range(trials)]  
 #model.save('6-13-18-simpleMNISTv1.h5')
