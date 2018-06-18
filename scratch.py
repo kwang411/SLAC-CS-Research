@@ -3,7 +3,7 @@ trials = 10
 
 def squaredDifference(x, y):
   temp = 0
-  for i in range(trials):
+  for i in range(len(x)):
     temp += (x[i] - y[i])**2
   return temp
 
