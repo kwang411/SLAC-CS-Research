@@ -9,6 +9,7 @@ from keras import backend as K
 from keras.models import load_model
 from keras.callbacks import Callback
 
+
 class WeightsSaver(Callback):
     def __init__(self, model, N):
         self.model = model
