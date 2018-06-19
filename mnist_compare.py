@@ -13,11 +13,11 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.models import load_model
-from keras.callbacks import Callback
+from keras.callbacks import Callback, ModelCheckpoint
 
 batch_size = 256
 num_classes = 10
-epochs = 1
+epochs = 10
 trials = 10
 
 # input image dimensions
@@ -70,7 +70,7 @@ print(x_test.shape[0], 'test samples')
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
-def train():
+def train(iteration):
   # Uncomment code below to generate same neural network.
   # seed(1)
   # tf.set_random_seed(1)
@@ -101,7 +101,8 @@ def train():
             epochs=epochs,
             verbose=1,
             validation_data=(x_test, y_test),
-            callbacks=[loss])
+            callbacks=[loss, ModelCheckpoint('weightsIF/weights.%02d.{epoch:02d}.hdf5' % iteration , monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=True, mode='auto', period=1)
+])
   score = model.evaluate(x_test, y_test, verbose=0)
   print('Test loss:', score[0])
   print('Test accuracy:', score[1])
@@ -117,9 +118,6 @@ for i in range(trials):
   print('___________________')
   print('trial ' + str(i+1))
   loss.iteration = i
-  train()
-print(loss.losses)
+  train(i + 1)
 
-
-comparison = [[squaredDifference(loss.losses[i], loss.losses[j]) for i in range(trials)] for j in range(trials)]  
 #model.save('6-13-18-simpleMNISTv1.h5')
