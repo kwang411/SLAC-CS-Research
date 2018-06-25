@@ -32,20 +32,22 @@ import numpy as np
 # Total params: 1,199,882
 # Trainable params: 1,199,882
 # Non-trainable params: 0
-desired_batch = 0
+iteration = 1
+epoch = 10
+#desired_batch = 0
 weight_layer = 0
 
 model = load_model('6-13-18-simpleMNISTv1.h5') #to get architecture
-name = 'weights%08d.h5' % desired_batch
-model.load_weights('weights/' + name, by_name = False)
+name = 'weightsIF/weights.%02d.%02d.hdf5' % (iteration, epoch)
+model.load_weights(name, by_name = False)
 
 #model.summary()
 weights = model.get_weights()
-#print(len(weights))
+print(len(weights))
 
 temp = weights[weight_layer]
-#print(temp.shape)
-#print(temp.T.shape)
+print(temp.shape)
+print(temp.T.shape)
 u, s, vh = np.linalg.svd(temp.T) #transpose to get (kernel, channel, x, y)
 print(u.shape)
 print(s.shape)
