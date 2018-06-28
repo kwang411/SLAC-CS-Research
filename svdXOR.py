@@ -18,7 +18,7 @@ from keras.models import model_from_json
 # json_string = '{"class_name": "Sequential", "keras_version": "2.2.0", "config": [{"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "input", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "tanh", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 4, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "output", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation":"sigmoid", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 1, "use_bias": true, "activity_regularizer": null}}], "backend": "tensorflow"}'
 # model = model_from_json(json_string)
 print("_______________________________")
-for num in [0,3,5,9]:
+for num in range(10):
 
 	print("random seed = " + str(num))
 	epoch = 20000
