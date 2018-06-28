@@ -14,7 +14,7 @@ import os
 import random
 import tensorflow as tf
 
-num = 3
+num = 5
 seed(num)
 tf.set_random_seed(num)
 os.environ['PYTHONHASHSEED'] = str(num)
@@ -28,15 +28,13 @@ keras.backend.set_session(sess)
 xor = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 y_xor = np.array([[0], [1], [1], [0]])
 
-
-model = Sequential(layers=[
-    Dense(units=4, activation='tanh', name='input'),
-    Dense(units=1, activation='sigmoid', name='output')
-])
+model = Sequential()
+model.add(Dense(units = 2, activation = 'tanh', name = 'input'))
+model.add(Dense(units = 1, activation= 'sigmoid', name='output'))
 
 model.compile(optimizer='adam', metrics=['accuracy'], loss='binary_crossentropy')
-model.save_weights('weightsXOR/weights.%02d.0000.hdf5' % num)
-model.fit(xor, y_xor, epochs=1000, callbacks= [ModelCheckpoint('weightsXOR/weights.%02d.{epoch:04d}.hdf5' % num , monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=True, mode='auto', period=500)])
+model.save_weights('weightsXOR/weights.%02d.00000.hdf5' % num)
+model.fit(xor, y_xor, epochs=40000, callbacks= [ModelCheckpoint('weightsXOR/weights.%02d.{epoch:05d}.hdf5' % num , monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=True, mode='auto', period=500)])
 
 
 print("predicting [1, 0]: ")
@@ -47,5 +45,9 @@ print("Predicting [0, 0]:")
 print(model.predict_classes(np.array([[0, 0]])))
 print("Predicting [1, 1]:")
 print(model.predict_classes(np.array([[1, 1]])))
+
+# model.save('6-25-18-simpleXORv1.h5')
+# del model
+# model = load_model('6-25-18-simpleXORv1.h5') #to get architecture
 
 #model.save('6-13-18-simpleMNISTv1.h5')

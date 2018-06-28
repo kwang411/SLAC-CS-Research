@@ -37,6 +37,7 @@ epoch = 10
 #desired_batch = 0
 weight_layer = 0
 
+
 model = load_model('6-13-18-simpleMNISTv1.h5') #to get architecture
 name = 'weightsIF/weights.%02d.%02d.hdf5' % (iteration, epoch)
 model.load_weights(name, by_name = False)
