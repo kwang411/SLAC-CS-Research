@@ -35,7 +35,7 @@ import numpy as np
 iteration = 1
 epoch = 10
 #desired_batch = 0
-weight_layer = 0
+weight_layer = 2
 
 
 model = load_model('6-13-18-simpleMNISTv1.h5') #to get architecture
@@ -44,13 +44,33 @@ model.load_weights(name, by_name = False)
 
 #model.summary()
 weights = model.get_weights()
-print(len(weights))
+#print(len(weights))
 
 temp = weights[weight_layer]
-print(temp.shape)
-print(temp.T.shape)
+#print(temp)
+#print(temp.shape)
+temp = temp.reshape(temp.shape[0]*temp.shape[1], temp.shape[2]*temp.shape[3])
+#print(temp)
+#print(temp.shape)
+
+#print(temp.T)
+#print(len(temp.T[0]))
 u, s, vh = np.linalg.svd(temp.T) #transpose to get (kernel, channel, x, y)
-print(u.shape)
-print(s.shape)
-print(vh.shape)
-print(s)
+#print(u.shape)
+#print(s.shape)
+#print(vh.shape)
+#print(s)
+
+from sklearn.decomposition import PCA
+
+pca = PCA(0.8)
+pca.fit(temp.T)
+#print(pca.n_components_)
+#print(pca.transform(temp.T).shape)
+#print(pca.components_)
+
+components = pca.components_
+print(np.fft.fft(components))
+
+x = np.array([1,2,1,0,1,2,1,0])
+print(np.fft.fft(x))

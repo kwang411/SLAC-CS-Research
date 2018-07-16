@@ -156,7 +156,7 @@ def plot_embedding(Z, title=None):
     for i in range(Z.shape[0]):
         plt.text(Z[i, 0], Z[i, 1], y[i],
                  # color=plt.cm.Set1(int(y[i][1:]) / 10.),
-                 fontdict={'weight': 'bold', 'size':97})
+                 fontdict={'weight': 'bold', 'size':9})
 
     # if hasattr(offsetbox, 'AnnotationBbox'):
     #     # only print thumbnails with matplotlib > 1.0
